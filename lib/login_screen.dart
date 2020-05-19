@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homemakercompanion/home_screen.dart';
+import 'package:homemakercompanion/navbar.dart';
 import 'components.dart';
 import 'constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           await _auth.signInWithEmailAndPassword(
                               email: email, password: password);
                       if (existingUser != null)
-                        Navigator.pushNamed(context, HomeScreen.id);
+                        Navigator.pushNamed(context, Navbar.id);
                       setState(() {
                         showSpinner = false;
                       });
