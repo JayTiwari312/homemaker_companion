@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constants.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String id = 'home_screen';
+class ListScreen extends StatefulWidget {
+  static const String id = 'list_screen';
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ListScreenState createState() => _ListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(icon: Icon(Icons.close), onPressed: () {}),
         ],
-        title: Center(child: Text('Dashboard')),
+        title: Center(child: Text('List')),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: Center(
         child: Text(
-          'Home Screen',
+          'List Screen',
           style: TextStyle(fontSize: 50.0),
         ),
       ),

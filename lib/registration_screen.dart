@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:homemakercompanion/navbar.dart';
 import 'components.dart';
 import 'constants.dart';
 import 'home_screen.dart';
@@ -70,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
-                      Navigator.pushNamed(context, HomeScreen.id);
+                      Navigator.pushNamed(context, Navbar.id);
                     }
                   } catch (e) {
                     print(e);
