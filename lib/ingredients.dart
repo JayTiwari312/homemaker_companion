@@ -9,7 +9,7 @@ class IngredientsList extends StatefulWidget {
 class _IngredientsListState extends State<IngredientsList> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [IngredientsList(), HomeScreen()];
+  final List<Widget> _children = [HomeScreen(), IngredientsList()];
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class _IngredientsListState extends State<IngredientsList> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            title: Text('List'),
+            icon: Icon(Icons.fastfood),
+            title: Text('Recipes'),
             backgroundColor: Colors.blue
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood),
-              title: Text('Recipes'),
+              icon: Icon(Icons.list),
+              title: Text('List'),
               backgroundColor: Colors.blue
           )
         ],
