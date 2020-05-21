@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:homemakercompanion/home_screen.dart';
-import 'package:homemakercompanion/ingredients.dart';
+import 'package:homemakercompanion/list_screen.dart';
 import 'package:homemakercompanion/login_screen.dart';
+import 'package:homemakercompanion/navbar.dart';
 import 'package:homemakercompanion/registration_screen.dart';
-import 'welcome_screen.dart';
-import 'registration_screen.dart';
-import 'login_screen.dart';
-import 'home_screen.dart';
-import 'welcome_screen.dart';
+
+import 'package:homemakercompanion/welcome_screen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(HomemakerCompanion());
 
@@ -21,8 +23,9 @@ class HomemakerCompanion extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         LoginScreen.id: (context) => LoginScreen(),
-        'ingredients': (context) => IngredientsList(),
+        ListScreen.id: (context) => ListScreen(),
         HomeScreen.id: (context) => HomeScreen(),
+        Navbar.id: (context) => Navbar(),
       },
     );
   }

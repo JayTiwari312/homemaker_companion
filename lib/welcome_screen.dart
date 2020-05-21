@@ -20,7 +20,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(seconds: 1),
       vsync: this,
     );
-    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
+    animation = ColorTween(
+            begin: Colors.indigo.shade200, end: Colors.deepPurple.shade200)
         .animate(controller);
     controller.forward();
     controller.addListener(() {
@@ -39,13 +40,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 50.0),
+            SizedBox(height: 80.0),
             Flexible(
               child: Hero(
                 tag: 'logo',
                 child: Container(
-                  child: Image.asset('images/logo1.jpg'),
-                  height: 300.0,
+                  child: Image.asset('images/logo5.png'),
+                  height: 200.0,
                 ),
               ),
             ),
@@ -54,32 +55,35 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               textAlign: TextAlign.center,
               text: ['Homemaker Companion'],
               colors: [
-                Colors.deepPurple,
-                Colors.blue,
+                Colors.red.shade800,
+                Colors.orange,
                 Colors.yellow,
-                Colors.red,
+                Colors.green,
+                Colors.blue,
+                Colors.indigo,
+                Colors.deepPurple,
               ],
               //speed: Duration(milliseconds: 100),
               //pause: Duration(milliseconds: 50),
               textStyle: TextStyle(
-                fontSize: 35.0,
+                fontSize: 50.0,
                 fontWeight: FontWeight.w900,
-                fontFamily: "Horizon",
+                fontFamily: 'Niconne',
               ),
             ),
             SizedBox(
-              height: 15.0,
+              height: 20.0,
             ),
             RoundedButton(
               title: 'Log In',
-              colour: Colors.lightBlue,
+              colour: Colors.pinkAccent.shade200,
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.id);
               },
             ),
             RoundedButton(
                 title: 'Register',
-                colour: Colors.blueAccent,
+                colour: Colors.pink.shade600,
                 onPressed: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 }),
