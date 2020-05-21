@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/rendering.dart';
 import 'package:homemakercompanion/items.dart';
+import 'package:homemakercompanion/side_drawer.dart';
 import 'constants.dart';
 import 'rounded_bordered_container.dart';
 class ListScreen extends StatefulWidget {
@@ -14,17 +15,17 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<item> items = [
-    item(item_name: "Chocolate", quantity: 2, image: 'images/chocolate.jpeg', type: 'Units'),
-    item(item_name: "Milk", quantity: 2, image: 'images/milk.jpeg', type: 'Litre'),
-    item(item_name: "Soap", quantity: 2, image: 'images/soap.jpeg', type: 'Units'),
-    item(item_name: "Rice", quantity: 2, image: 'images/rice.jpeg', type: 'Kg'),
-    item(item_name: "Toothpaste", quantity: 2, image: 'images/toothpaste.jpeg', type: 'Units'),
-    item(item_name: "Cookies", quantity: 2, image: 'images/cookies.jpeg', type: 'Gram'),
-    item(item_name: "Tea", quantity: 2, image: 'images/tea.jpeg', type: 'Kg'),
-    item(item_name: "Oil", quantity: 2, image: 'images/oil.jpeg', type: 'Litre'),
-    item(item_name: "Notebooks", quantity: 2, image: 'images/notebooks.jpeg', type: 'Units'),
-    item(item_name: "Pen", quantity: 2, image: 'images/pen.jpeg', type: 'Units'),
-    item(item_name: "Pencil", quantity: 2, image: 'images/pencil.jpeg', type: 'Units'),
+    item(item_name: "Chocolate", quantity: 2, image: 'images/chocolate.png', type: 'Units'),
+    item(item_name: "Milk", quantity: 2, image: 'images/milk.png', type: 'Litre'),
+    item(item_name: "Soap", quantity: 2, image: 'images/soap.png', type: 'Units'),
+    item(item_name: "Rice", quantity: 2, image: 'images/rice.png', type: 'Kg'),
+    item(item_name: "Toothpaste", quantity: 2, image: 'images/toothpaste.png', type: 'Units'),
+    item(item_name: "Cookies", quantity: 2, image: 'images/cookies.png', type: 'Gram'),
+    item(item_name: "Tea", quantity: 2, image: 'images/tea.png', type: 'Kg'),
+    item(item_name: "Oil", quantity: 2, image: 'images/oil.png', type: 'Litre'),
+    item(item_name: "Notebooks", quantity: 2, image: 'images/notebook.png', type: 'Units'),
+    item(item_name: "Pen", quantity: 2, image: 'images/pen.png', type: 'Units'),
+    item(item_name: "Pencil", quantity: 2, image: 'images/pencil.png', type: 'Units'),
   ];
 
   List<DropdownMenuItem<String>> _dropDownItem() {
@@ -40,7 +41,13 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: (){
+            Scaffold.of(context).openDrawer();
+          },
+        ),
 //        actions: <Widget>[
 //          IconButton(icon: Icon(Icons.close), onPressed: () {}),
 //        ],
@@ -48,7 +55,7 @@ class _ListScreenState extends State<ListScreen> {
         title: Center(child: Text('Item List')),
         backgroundColor: Colors.lightBlueAccent,
       ),
-      
+      drawer: new SideDrawer(),
       body: Column(
         children: <Widget>[
           Flexible(
