@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/rendering.dart';
 import 'package:homemakercompanion/items.dart';
 import 'constants.dart';
-
+import 'rounded_bordered_container.dart';
 class ListScreen extends StatefulWidget {
   static const String id = 'list_screen';
   @override
@@ -39,87 +39,142 @@ class _ListScreenState extends State<ListScreen> {
         backgroundColor: Colors.lightBlueAccent,
       ),
       
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index){
-          return SingleChildScrollView(
-            child: Card(
-              margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10.0, bottom: 10.0),
-              child: new Container(
-                child: new Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
-                            child: new CircleAvatar(backgroundImage: AssetImage(items[index].image),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, int index) {
+                return SingleChildScrollView(
+                    child: RoundedContainer(
+                      padding: const EdgeInsets.all(0),
+                      margin: EdgeInsets.all(10),
+                      height: 100,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(items[index].image),
+                                  fit: BoxFit.cover,
+                                )
                             ),
-                            color: Colors.grey.shade400,
-                        ),
-                        flex: 1,
-                    ),
-                    Expanded(
-                          child: Container(
-                            child: Center(child: new Text(
-                                items[index].item_name,
-                                style: TextStyle(fontWeight: FontWeight.bold),)
+                          ),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: Text(
+                                          items[index].item_name,
+                                          overflow: TextOverflow.fade,
+                                          softWrap: true,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600, fontSize: 25,fontFamily: 'IndieFlower'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      Row(
+                                        children: <Widget>[
+                                          InkWell(
+                                            onTap: () {},
+                                            splashColor: Colors.redAccent.shade200,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(50)),
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(6.0),
+                                                child: Container(
+                                                  height: 40,
+                                                  width: 40,
+                                                  child: Center(
+                                                    child: RaisedButton(
+                                                      onPressed: (){
+                                                        setState(() {
+                                                          if(items[index].quantity>0){
+                                                            items[index].quantity--;
+                                                          }
+                                                        });
+                                                      },
+                                                      color: Colors.white,
+                                                      child: Text('-', style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.red)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Card(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text(items[index].quantity.toString()),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            splashColor: Colors.lightBlue,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(50)),
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(6.0),
+                                                child: Container(
+                                                  height: 40,
+                                                  width: 40,
+                                                  child: Center(
+                                                    child: RaisedButton(
+                                                      onPressed: (){
+                                                        setState(() {
+                                                          items[index].quantity++;
+                                                        });
+                                                      },
+                                                      color: Colors.white,
+                                                      child: Text('+', style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.blue)),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            height: 30,
-                            padding: EdgeInsets.symmetric(),
-                            color: Colors.amber,
-                          ),
-                        flex: 1,),
-                    Expanded(
-                        child: Container(
-                          child: new RaisedButton(
-                          onPressed: (){
-                            setState(() {
-                              if(items[index].quantity>0){
-                                items[index].quantity--;
-                              }
-                            });
-                          },
-                            
-                          child: Text('-', style: TextStyle(fontWeight: FontWeight.bold),),
-                            color: Colors.red,
+                          )
+                        ],
                       ),
-                          height: 20,
-                          width: 10,
-                        ),
-                      flex: 1,
-                    ),
-                    Expanded(
-                        child: Container(
-                          child: Center(
-                              child: new Text(items[index].quantity.toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.amber,
-                        ),
-                        flex: 1,
-                    ),
-                    Expanded(
-                      child: new RaisedButton(
-                        onPressed: (){
-                          setState(() {
-                            items[index].quantity++;
-                          });
-                        },
-                        child: Text('+'),
-                      ),
-                      flex: 1,
-                    ),
-                  ],
-                ),
-              ),
-
+                    )
+                );
+              },
             ),
-          );
-        }
-      ),
-        backgroundColor: Colors.grey.shade400,
-
-        );
+          ),
+        ],
+      )
+    );
   }
 }
-
-
