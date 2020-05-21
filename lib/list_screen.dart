@@ -14,18 +14,28 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<item> items = [
-    item(item_name: "Chocolate", quantity: 2, image: 'images/chocolate.jpeg'),
-    item(item_name: "Milk", quantity: 2, image: 'images/milk.jpeg'),
-    item(item_name: "Soap", quantity: 2, image: 'images/soap.jpeg'),
-    item(item_name: "Rice", quantity: 2, image: 'images/rice.jpeg'),
-    item(item_name: "Toothpaste", quantity: 2, image: 'images/toothpaste.jpeg'),
-    item(item_name: "Cookies", quantity: 2, image: 'images/cookies.jpeg'),
-    item(item_name: "Tea", quantity: 2, image: 'images/tea.jpeg'),
-    item(item_name: "Oil", quantity: 2, image: 'images/oil.jpeg'),
-    item(item_name: "Notebooks", quantity: 2, image: 'images/notebooks.jpeg'),
-    item(item_name: "Pen", quantity: 2, image: 'images/pen.jpeg'),
-    item(item_name: "Pencil", quantity: 2, image: 'images/pen.jpeg'),
+    item(item_name: "Chocolate", quantity: 2, image: 'images/chocolate.jpeg', type: 'Units'),
+    item(item_name: "Milk", quantity: 2, image: 'images/milk.jpeg', type: 'Litre'),
+    item(item_name: "Soap", quantity: 2, image: 'images/soap.jpeg', type: 'Units'),
+    item(item_name: "Rice", quantity: 2, image: 'images/rice.jpeg', type: 'Kg'),
+    item(item_name: "Toothpaste", quantity: 2, image: 'images/toothpaste.jpeg', type: 'Units'),
+    item(item_name: "Cookies", quantity: 2, image: 'images/cookies.jpeg', type: 'Gram'),
+    item(item_name: "Tea", quantity: 2, image: 'images/tea.jpeg', type: 'Kg'),
+    item(item_name: "Oil", quantity: 2, image: 'images/oil.jpeg', type: 'Litre'),
+    item(item_name: "Notebooks", quantity: 2, image: 'images/notebooks.jpeg', type: 'Units'),
+    item(item_name: "Pen", quantity: 2, image: 'images/pen.jpeg', type: 'Units'),
+    item(item_name: "Pencil", quantity: 2, image: 'images/pencil.jpeg', type: 'Units'),
   ];
+
+  List<DropdownMenuItem<String>> _dropDownItem() {
+    List<String> ddl = ["None", 'Gram', 'Kg', 'Litre', 'ml', 'Units'];
+    return ddl
+        .map((value) => DropdownMenuItem(
+      value: value,
+      child: Text(value),
+    )).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +94,7 @@ class _ListScreenState extends State<ListScreen> {
                                       Spacer(),
                                       Row(
                                         children: <Widget>[
-                                          InkWell(
+                                          InkWell(    //Reduce Item
                                             onTap: () {},
                                             splashColor: Colors.redAccent.shade200,
                                             child: Container(
@@ -119,16 +129,42 @@ class _ListScreenState extends State<ListScreen> {
                                           SizedBox(
                                             width: 4,
                                           ),
-                                          Card(
+                                          Card(   //Item Quantity
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
                                               child: Text(items[index].quantity.toString()),
                                             ),
                                           ),
+                                          InkWell(    //Quantity Type
+                                            onTap: () {},
+                                            splashColor: Colors.lightBlue,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(100)),
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(6.0),
+                                                child: Container(
+                                                  child: DropdownButton(
+                                                    value: items[index].type,
+                                                    items: _dropDownItem(),
+                                                    onChanged: (value){
+                                                      setState(() {
+                                                        items[index].type = value;
+                                                      });
+                                                    },
+                                                  ),
+                                                  height: 50,
+                                                  width: 70,
+                                                ),
+
+                                              ),
+                                            ),
+                                          ),
                                           SizedBox(
                                             width: 4,
                                           ),
-                                          InkWell(
+                                          InkWell(    //Increase Item
                                             onTap: () {},
                                             splashColor: Colors.lightBlue,
                                             child: Container(
@@ -178,3 +214,5 @@ class _ListScreenState extends State<ListScreen> {
     );
   }
 }
+
+
