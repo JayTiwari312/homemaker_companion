@@ -24,7 +24,6 @@ class HomemakerCompanion extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(),
         Navbar.id: (context) => Navbar(),
         NewRecipeScreen.id: (context) => NewRecipeScreen(),
-        RecipeSinglePage.id: (context) => RecipeSinglePage(),
       },
     );
   }
