@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:homemakercompanion/items.dart';
 import 'constants.dart';
 import 'rounded_bordered_container.dart';
+
 class ListScreen extends StatefulWidget {
   static const String id = 'list_screen';
   @override
@@ -14,205 +15,252 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   List<item> items = [
-    item(item_name: "Chocolate", quantity: 2, image: 'images/chocolate.jpeg', type: 'Units'),
-    item(item_name: "Milk", quantity: 2, image: 'images/milk.jpeg', type: 'Litre'),
-    item(item_name: "Soap", quantity: 2, image: 'images/soap.jpeg', type: 'Units'),
+    item(
+        item_name: "Chocolate",
+        quantity: 2,
+        image: 'images/chocolate.jpeg',
+        type: 'Units'),
+    item(
+        item_name: "Milk",
+        quantity: 2,
+        image: 'images/milk.jpeg',
+        type: 'Litre'),
+    item(
+        item_name: "Soap",
+        quantity: 2,
+        image: 'images/soap.jpeg',
+        type: 'Units'),
     item(item_name: "Rice", quantity: 2, image: 'images/rice.jpeg', type: 'Kg'),
-    item(item_name: "Toothpaste", quantity: 2, image: 'images/toothpaste.jpeg', type: 'Units'),
-    item(item_name: "Cookies", quantity: 2, image: 'images/cookies.jpeg', type: 'Gram'),
+    item(
+        item_name: "Toothpaste",
+        quantity: 2,
+        image: 'images/toothpaste.jpeg',
+        type: 'Units'),
+    item(
+        item_name: "Cookies",
+        quantity: 2,
+        image: 'images/cookies.jpeg',
+        type: 'Gram'),
     item(item_name: "Tea", quantity: 2, image: 'images/tea.jpeg', type: 'Kg'),
-    item(item_name: "Oil", quantity: 2, image: 'images/oil.jpeg', type: 'Litre'),
-    item(item_name: "Notebooks", quantity: 2, image: 'images/notebooks.jpeg', type: 'Units'),
-    item(item_name: "Pen", quantity: 2, image: 'images/pen.jpeg', type: 'Units'),
-    item(item_name: "Pencil", quantity: 2, image: 'images/pencil.jpeg', type: 'Units'),
+    item(
+        item_name: "Oil", quantity: 2, image: 'images/oil.jpeg', type: 'Litre'),
+    item(
+        item_name: "Notebooks",
+        quantity: 2,
+        image: 'images/notebooks.jpeg',
+        type: 'Units'),
+    item(
+        item_name: "Pen", quantity: 2, image: 'images/pen.jpeg', type: 'Units'),
+    item(
+        item_name: "Pencil",
+        quantity: 2,
+        image: 'images/pencil.jpeg',
+        type: 'Units'),
   ];
 
   List<DropdownMenuItem<String>> _dropDownItem() {
     List<String> ddl = ["None", 'Gram', 'Kg', 'Litre', 'ml', 'Units'];
     return ddl
         .map((value) => DropdownMenuItem(
-      value: value,
-      child: Text(value),
-    )).toList();
+              value: value,
+              child: Text(value),
+            ))
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: null,
+        appBar: AppBar(
+          leading: null,
 //        actions: <Widget>[
 //          IconButton(icon: Icon(Icons.close), onPressed: () {}),
 //        ],
 
-        title: Center(child: Text('Item List')),
-        backgroundColor: Colors.lightBlueAccent,
-      ),
-      
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, int index) {
-                return SingleChildScrollView(
-                    child: RoundedContainer(
-                      padding: const EdgeInsets.all(0),
-                      margin: EdgeInsets.all(10),
-                      height: 100,
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 100,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(items[index].image),
-                                  fit: BoxFit.cover,
-                                )
-                            ),
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: Text(
-                                          items[index].item_name,
-                                          overflow: TextOverflow.fade,
-                                          softWrap: true,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600, fontSize: 25,fontFamily: 'IndieFlower'),
-                                        ),
+          title: Center(child: Text('Item List')),
+          backgroundColor: Colors.lightBlueAccent,
+        ),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, int index) {
+                  return SingleChildScrollView(
+                      child: RoundedContainer(
+                    padding: const EdgeInsets.all(0),
+                    margin: EdgeInsets.all(10),
+                    height: 100,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: AssetImage(items[index].image),
+                            fit: BoxFit.cover,
+                          )),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Flexible(
+                                      child: Text(
+                                        items[index].item_name,
+                                        overflow: TextOverflow.fade,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 25,
+                                            fontFamily: 'IndieFlower'),
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Spacer(),
-                                      Row(
-                                        children: <Widget>[
-                                          InkWell(    //Reduce Item
-                                            onTap: () {},
-                                            splashColor: Colors.redAccent.shade200,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(50)),
-                                              alignment: Alignment.center,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(6.0),
-                                                child: Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  child: Center(
-                                                    child: RaisedButton(
-                                                      onPressed: (){
-                                                        setState(() {
-                                                          if(items[index].quantity>0){
-                                                            items[index].quantity--;
-                                                          }
-                                                        });
-                                                      },
-                                                      color: Colors.white,
-                                                      child: Text('-', style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.red)),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Card(   //Item Quantity
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Spacer(),
+                                    Row(
+                                      children: <Widget>[
+                                        InkWell(
+                                          //Reduce Item
+                                          onTap: () {},
+                                          splashColor:
+                                              Colors.redAccent.shade200,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                            alignment: Alignment.center,
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Text(items[index].quantity.toString()),
-                                            ),
-                                          ),
-                                          InkWell(    //Quantity Type
-                                            onTap: () {},
-                                            splashColor: Colors.lightBlue,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(100)),
-                                              alignment: Alignment.center,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(6.0),
-                                                child: Container(
-                                                  child: DropdownButton(
-                                                    value: items[index].type,
-                                                    items: _dropDownItem(),
-                                                    onChanged: (value){
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Container(
+                                                height: 40,
+                                                width: 40,
+                                                child: Center(
+                                                  child: RaisedButton(
+                                                    onPressed: () {
                                                       setState(() {
-                                                        items[index].type = value;
+                                                        if (items[index]
+                                                                .quantity >
+                                                            0) {
+                                                          items[index]
+                                                              .quantity--;
+                                                        }
                                                       });
                                                     },
-                                                  ),
-                                                  height: 50,
-                                                  width: 70,
-                                                ),
-
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          InkWell(    //Increase Item
-                                            onTap: () {},
-                                            splashColor: Colors.lightBlue,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(50)),
-                                              alignment: Alignment.center,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(6.0),
-                                                child: Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  child: Center(
-                                                    child: RaisedButton(
-                                                      onPressed: (){
-                                                        setState(() {
-                                                          items[index].quantity++;
-                                                        });
-                                                      },
-                                                      color: Colors.white,
-                                                      child: Text('+', style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.blue)),
-                                                    ),
+                                                    color: Colors.white,
+                                                    child: Text('-',
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.red)),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Card(
+                                          //Item Quantity
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(items[index]
+                                                .quantity
+                                                .toString()),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          //Quantity Type
+                                          onTap: () {},
+                                          splashColor: Colors.lightBlue,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Container(
+                                                child: DropdownButton(
+                                                  value: items[index].type,
+                                                  items: _dropDownItem(),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      items[index].type = value;
+                                                    });
+                                                  },
+                                                ),
+                                                height: 50,
+                                                width: 70,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        InkWell(
+                                          //Increase Item
+                                          onTap: () {},
+                                          splashColor: Colors.lightBlue,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Container(
+                                                height: 40,
+                                                width: 40,
+                                                child: Center(
+                                                  child: RaisedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        items[index].quantity++;
+                                                      });
+                                                    },
+                                                    color: Colors.white,
+                                                    child: Text('+',
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.blue)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                    )
-                );
-              },
+                          ),
+                        )
+                      ],
+                    ),
+                  ));
+                },
+              ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }
-
-

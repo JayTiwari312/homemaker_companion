@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'constants.dart';
+import 'package:flutter/material.dart';
+import 'crud.dart';
+import 'navbar.dart';
+import 'network_image.dart';
+import 'new_recipe_screen.dart';
 
-final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 final _auth = FirebaseAuth.instance;
 
@@ -14,6 +16,7 @@ class RecipesScreen extends StatefulWidget {
 }
 
 class _RecipesScreenState extends State<RecipesScreen> {
+  Stream recipesStream;
   final messageTextController = TextEditingController();
   String messageText;
 
@@ -21,6 +24,9 @@ class _RecipesScreenState extends State<RecipesScreen> {
   void initState() {
     super.initState();
     getCurrentUser();
+    crudMethods().getData().then((result) async {
+      recipesStream = await result;
+    });
   }
 
   void getCurrentUser() async {
@@ -35,143 +41,194 @@ class _RecipesScreenState extends State<RecipesScreen> {
     }
   }
 
+  final Color primaryColor = Color(0xffFD6592);
+  final Color bgColor = Color(0xffF9E0E3);
+  final Color secondaryColor = Color(0xff324558);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
-              }),
-        ],
-        title: Center(child: Text('Recipes')),
-        backgroundColor: Colors.lightBlueAccent,
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            MessageStream(),
-            Container(
-              decoration: kMessageContainerDecoration,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: messageTextController,
-                      onChanged: (value) {
-                        messageText = value;
-                      },
-                      decoration: kMessageTextFieldDecoration,
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      messageTextController.clear();
-                      _firestore.collection('messages').add(
-                          {'text': messageText, 'sender': loggedInUser.email});
-                    },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
-                    ),
-                  ),
-                ],
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Theme(
+        data: ThemeData(
+          primaryColor: primaryColor,
+          appBarTheme: AppBarTheme(
+            color: Colors.white,
+            textTheme: TextTheme(
+              title: TextStyle(
+                color: secondaryColor,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
+            iconTheme: IconThemeData(color: secondaryColor),
+            actionsIconTheme: IconThemeData(
+              color: secondaryColor,
+            ),
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class MessageStream extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('messages').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.lightBlueAccent,
-              ),
-            );
-          }
-          final messages = snapshot.data.documents.reversed;
-          List<MessageBubble> messageBubbles = [];
-          for (var message in messages) {
-            final messageText = message.data['text'];
-            final messageSender = message.data['sender'];
-            //final currentUser = loggedInUser.email;
-            final messageBubble = MessageBubble(
-              sender: messageSender,
-              text: messageText,
-              isMe: loggedInUser.email == messageSender,
-            );
-            messageBubbles.add(messageBubble);
-          }
-          return Expanded(
-            child: ListView(
-              reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              children: messageBubbles,
+        child: Scaffold(
+          backgroundColor: Theme.of(context).buttonColor,
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Recipes',
+              style: TextStyle(fontFamily: 'Niconne', fontSize: 35.0),
             ),
-          );
-        });
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  MessageBubble({this.sender, this.text, this.isMe});
-
-  final String sender;
-  final String text;
-  bool isMe;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            sender,
-            style: TextStyle(fontSize: 12.0, color: Colors.black54),
-          ),
-          Material(
-            borderRadius: isMe
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0))
-                : BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0)),
-            elevation: 5.0,
-            color: isMe
-                ? Colors.redAccent.shade700
-                : Colors.lightGreenAccent.shade700,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                '$text',
-                style: TextStyle(fontSize: 15.0, color: Colors.white),
+            leading: IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.pushNamed(context, Navbar.id);
+              },
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {},
               ),
+            ],
+            bottom: TabBar(
+              isScrollable: false,
+              labelColor: primaryColor,
+              indicatorColor: primaryColor,
+              unselectedLabelColor: secondaryColor,
+              tabs: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("All Recipes"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Favourites"),
+                ),
+              ],
             ),
           ),
-        ],
+          body: TabBarView(
+            children: <Widget>[
+              //////////////////////////////////////////
+              StreamBuilder<QuerySnapshot>(
+                stream: recipesStream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.lightBlueAccent,
+                      ),
+                    );
+                  }
+                  final recipes = snapshot.data.documents;
+                  List<Widget> recipeWidgets = [];
+                  for (var recipe in recipes) {
+                    final recipeAuthor = recipe.data['authorName'];
+                    final recipeEmail = recipe.data['email'];
+                    final recipeDesc = recipe.data['descriptions'];
+                    final recipeImage = recipe.data['imageURL'];
+                    final recipeTitle = recipe.data['title'];
+                    final recipeWidget = Container(
+                      color: Colors.white,
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            width: 90,
+                            height: 90,
+                            color: bgColor,
+                          ),
+                          Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(16.0),
+                            margin: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  color: Colors.blue,
+                                  width: 80.0,
+                                  child: PNetworkImage(
+                                    recipeImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(width: 20.0),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        recipeTitle,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                          color: secondaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                        ),
+                                      ),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/nicasiaassets/profile.jpg'),
+                                                radius: 15.0,
+                                                backgroundColor: primaryColor,
+                                              ),
+                                            ),
+                                            WidgetSpan(
+                                              child: const SizedBox(width: 5.0),
+                                            ),
+                                            TextSpan(
+                                                text: recipeAuthor,
+                                                style:
+                                                    TextStyle(fontSize: 16.0)),
+                                            WidgetSpan(
+                                              child:
+                                                  const SizedBox(width: 20.0),
+                                            ),
+                                            WidgetSpan(
+                                              child: const SizedBox(width: 5.0),
+                                            ),
+                                          ],
+                                        ),
+                                        style: TextStyle(height: 2.0),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                    recipeWidgets.add(recipeWidget);
+                  }
+                  return ListView.separated(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) {
+                      return recipeWidgets[index];
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16.0),
+                  );
+                },
+              ),
+              Container(
+                child: Text("Tab 2"),
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.purpleAccent,
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, NewRecipeScreen.id);
+            },
+          ),
+        ),
       ),
     );
   }

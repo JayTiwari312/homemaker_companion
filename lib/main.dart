@@ -3,6 +3,8 @@ import 'package:homemakercompanion/home_screen.dart';
 import 'package:homemakercompanion/list_screen.dart';
 import 'package:homemakercompanion/login_screen.dart';
 import 'package:homemakercompanion/navbar.dart';
+import 'package:homemakercompanion/new_recipe_screen.dart';
+import 'package:homemakercompanion/recipe_single.dart';
 import 'package:homemakercompanion/registration_screen.dart';
 import 'package:homemakercompanion/welcome_screen.dart';
 
@@ -21,6 +23,8 @@ class HomemakerCompanion extends StatelessWidget {
         ListScreen.id: (context) => ListScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         Navbar.id: (context) => Navbar(),
+        NewRecipeScreen.id: (context) => NewRecipeScreen(),
+        RecipeSinglePage.id: (context) => RecipeSinglePage(),
       },
     );
   }
