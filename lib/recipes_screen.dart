@@ -16,6 +16,7 @@ class RecipesScreen extends StatefulWidget {
 }
 
 class _RecipesScreenState extends State<RecipesScreen> {
+  final _firestore = Firestore.instance;
   Stream recipesStream;
   final messageTextController = TextEditingController();
   String messageText;
@@ -24,9 +25,6 @@ class _RecipesScreenState extends State<RecipesScreen> {
   void initState() {
     super.initState();
     getCurrentUser();
-    crudMethods().getData().then((result) async {
-      recipesStream = await result;
-    });
   }
 
   void getCurrentUser() async {
@@ -109,7 +107,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
             children: <Widget>[
               //////////////////////////////////////////
               StreamBuilder<QuerySnapshot>(
-                stream: recipesStream,
+                stream: _firestore.collection('recipes').snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
@@ -126,81 +124,86 @@ class _RecipesScreenState extends State<RecipesScreen> {
                     final recipeDesc = recipe.data['descriptions'];
                     final recipeImage = recipe.data['imageURL'];
                     final recipeTitle = recipe.data['title'];
-                    final recipeWidget = Container(
-                      color: Colors.white,
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            width: 90,
-                            height: 90,
-                            color: bgColor,
-                          ),
-                          Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(16.0),
-                            margin: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  height: 100,
-                                  color: Colors.blue,
-                                  width: 80.0,
-                                  child: PNetworkImage(
-                                    recipeImage,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(width: 20.0),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        recipeTitle,
-                                        textAlign: TextAlign.justify,
-                                        style: TextStyle(
-                                          color: secondaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                    'assets/nicasiaassets/profile.jpg'),
-                                                radius: 15.0,
-                                                backgroundColor: primaryColor,
-                                              ),
-                                            ),
-                                            WidgetSpan(
-                                              child: const SizedBox(width: 5.0),
-                                            ),
-                                            TextSpan(
-                                                text: recipeAuthor,
-                                                style:
-                                                    TextStyle(fontSize: 16.0)),
-                                            WidgetSpan(
-                                              child:
-                                                  const SizedBox(width: 20.0),
-                                            ),
-                                            WidgetSpan(
-                                              child: const SizedBox(width: 5.0),
-                                            ),
-                                          ],
-                                        ),
-                                        style: TextStyle(height: 2.0),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                    final recipeWidget = GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        color: Colors.white,
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              width: 90,
+                              height: 90,
+                              color: bgColor,
                             ),
-                          )
-                        ],
+                            Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(16.0),
+                              margin: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 100,
+                                    color: Colors.blue,
+                                    width: 80.0,
+                                    child: PNetworkImage(
+                                      recipeImage,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20.0),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          recipeTitle,
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                            color: secondaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/nicasiaassets/profile.jpg'),
+                                                  radius: 15.0,
+                                                  backgroundColor: primaryColor,
+                                                ),
+                                              ),
+                                              WidgetSpan(
+                                                child:
+                                                    const SizedBox(width: 5.0),
+                                              ),
+                                              TextSpan(
+                                                  text: recipeAuthor,
+                                                  style: TextStyle(
+                                                      fontSize: 16.0)),
+                                              WidgetSpan(
+                                                child:
+                                                    const SizedBox(width: 20.0),
+                                              ),
+                                              WidgetSpan(
+                                                child:
+                                                    const SizedBox(width: 5.0),
+                                              ),
+                                            ],
+                                          ),
+                                          style: TextStyle(height: 2.0),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                     recipeWidgets.add(recipeWidget);

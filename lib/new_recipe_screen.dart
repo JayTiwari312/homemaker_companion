@@ -16,6 +16,7 @@ class NewRecipeScreen extends StatefulWidget {
 }
 
 class _NewRecipeScreenState extends State<NewRecipeScreen> {
+  bool _progress = true;
   File _image;
   String authorName;
   String title;
@@ -102,143 +103,153 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
           IconButton(
             icon: Icon(Icons.cloud_upload),
             onPressed: () {
-              getSpinner();
               uploadRecipe();
+              setState(() {
+                _progress = false;
+              });
             },
           ),
         ],
       ),
-      body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    getImage();
-                  },
-                  child: _image != null
-                      ? Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.file(
-                              _image,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          margin: EdgeInsets.symmetric(horizontal: 30),
-                          height: 150,
-                          width: 500,
-                        )
-                      : Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30),
-                          child: Icon(
-                            Icons.add_a_photo,
-                          ),
-                          height: 150,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.blueGrey.shade100,
-                              borderRadius: BorderRadius.circular(6)),
-                        ),
-                ),
-                Card(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 30),
-                  elevation: 11,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40))),
-                  child: TextField(
-                    //controller: _textEmail,
-                    onChanged: (value) {
-                      authorName = value;
-                    },
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.black26,
-                        ),
-                        hintText: "Author Name",
+      body: _progress
+          ? SafeArea(
+              child: ListView(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          getImage();
+                        },
+                        child: _image != null
+                            ? Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: Image.file(
+                                    _image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                margin: EdgeInsets.symmetric(horizontal: 30),
+                                height: 150,
+                                width: 500,
+                              )
+                            : Container(
+                                margin: EdgeInsets.symmetric(horizontal: 30),
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                ),
+                                height: 150,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    color: Colors.blueGrey.shade100,
+                                    borderRadius: BorderRadius.circular(6)),
+                              ),
+                      ),
+                      Card(
+                        margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                        elevation: 11,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                        child: TextField(
+                          //controller: _textEmail,
+                          onChanged: (value) {
+                            authorName = value;
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.black26,
+                              ),
+                              hintText: "Author Name",
 //                              errorText: _validateEmail
 //                                  ? 'Please enter your password'
 //                                  : null,
-                        hintStyle: TextStyle(color: Colors.black26),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                              hintStyle: TextStyle(color: Colors.black26),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 16.0)),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 16.0)),
-                  ),
-                ),
-                Card(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 30),
-                  elevation: 11,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40))),
-                  child: TextField(
-                    //controller: _textEmail,
-                    onChanged: (value) {
-                      title = value;
-                    },
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.title,
-                          color: Colors.black26,
-                        ),
-                        hintText: "Title",
+                      ),
+                      Card(
+                        margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                        elevation: 11,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                        child: TextField(
+                          //controller: _textEmail,
+                          onChanged: (value) {
+                            title = value;
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.title,
+                                color: Colors.black26,
+                              ),
+                              hintText: "Title",
 //                              errorText: _validateEmail
 //                                  ? 'Please enter your password'
 //                                  : null,
-                        hintStyle: TextStyle(color: Colors.black26),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                              hintStyle: TextStyle(color: Colors.black26),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 16.0)),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 16.0)),
-                  ),
-                ),
-                Card(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 30),
-                  elevation: 11,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40))),
-                  child: TextField(
-                    maxLines: null,
-                    minLines: 15,
-                    keyboardType: TextInputType.multiline,
-                    //controller: _textEmail,
-                    onChanged: (value) {
-                      description = value;
-                    },
-                    decoration: InputDecoration(
-                        hintText: "Description",
+                      ),
+                      Card(
+                        margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                        elevation: 11,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                        child: TextField(
+                          maxLines: null,
+                          minLines: 15,
+                          keyboardType: TextInputType.multiline,
+                          //controller: _textEmail,
+                          onChanged: (value) {
+                            description = value;
+                          },
+                          decoration: InputDecoration(
+                              hintText: "Description",
 //                              errorText: _validateEmail
 //                                  ? 'Please enter your password'
 //                                  : null,
-                        hintStyle: TextStyle(color: Colors.black26),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                              hintStyle: TextStyle(color: Colors.black26),
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(40.0)),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 16.0)),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 16.0)),
-                  ),
-                ),
-              ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
-          ],
-        ),
-      ),
+          : getSpinner(),
     );
   }
 }
