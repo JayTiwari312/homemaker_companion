@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:homemakercompanion/recipe_single.dart';
 import 'crud.dart';
 import 'navbar.dart';
 import 'network_image.dart';
@@ -39,7 +40,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
     }
   }
 
-  final Color primaryColor = Color(0xffFD6592);
+  final Color primaryColor = Colors.orangeAccent;
   final Color bgColor = Color(0xffF9E0E3);
   final Color secondaryColor = Color(0xff324558);
 
@@ -69,20 +70,28 @@ class _RecipesScreenState extends State<RecipesScreen> {
         child: Scaffold(
           backgroundColor: Theme.of(context).buttonColor,
           appBar: AppBar(
+            backgroundColor: Colors.deepPurpleAccent,
             centerTitle: true,
             title: Text(
               'Recipes',
-              style: TextStyle(fontFamily: 'Niconne', fontSize: 35.0),
+              style: TextStyle(
+                  fontFamily: 'Niconne', color: Colors.white, fontSize: 35.0),
             ),
             leading: IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pushNamed(context, Navbar.id);
               },
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.search),
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
                 onPressed: () {},
               ),
             ],
@@ -125,15 +134,28 @@ class _RecipesScreenState extends State<RecipesScreen> {
                     final recipeImage = recipe.data['imageURL'];
                     final recipeTitle = recipe.data['title'];
                     final recipeWidget = GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RecipeSinglePage(
+                              recipeAuthor: recipeAuthor,
+                              recipeEmail: recipeEmail,
+                              recipeDesc: recipeDesc,
+                              recipeImage: recipeImage,
+                              recipeTitle: recipeTitle,
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
-                        color: Colors.white,
+                        color: Colors.redAccent.shade100,
                         child: Stack(
                           children: <Widget>[
                             Container(
                               width: 90,
                               height: 90,
-                              color: bgColor,
+                              color: Colors.orange.shade900,
                             ),
                             Container(
                               color: Colors.white,
