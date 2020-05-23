@@ -3,6 +3,7 @@ import 'package:homemakercompanion/home_screen.dart';
 import 'package:homemakercompanion/landing1.dart';
 import 'main.dart';
 import 'landing1.dart';
+import 'settings2.dart';
 
 class SideDrawer extends StatelessWidget {
 
@@ -45,11 +46,16 @@ class SideDrawer extends StatelessWidget {
               ),
             ListTile(
 
-              leading: Icon(Icons.person),
-              title: Text('Profile', style: TextStyle(
+              leading: Icon(Icons.settings),
+              title: Text('Settings', style: TextStyle(
                 fontSize: 20
               ),),
-              onTap: (){},
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsTwoPage()),
+                );
+              },
             ),
               _buildDivider(),
               ListTile(
