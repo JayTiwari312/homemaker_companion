@@ -250,7 +250,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.purpleAccent,
+            backgroundColor: Colors.blue[800],
             child: Icon(Icons.add),
             onPressed: () {
               Navigator.pushNamed(context, NewRecipeScreen.id);

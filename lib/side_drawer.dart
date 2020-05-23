@@ -32,7 +32,7 @@ class SideDrawer extends StatelessWidget {
                           fit: BoxFit.fill),
                         ),
                       ),
-                      Text("Usename", style: TextStyle(
+                      Text("Username", style: TextStyle(
                         fontSize: 22,
                         color: Colors.white
                       ),
