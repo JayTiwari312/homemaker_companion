@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:homemakercompanion/recipe_single.dart';
+import 'package:homemakercompanion/side_drawer.dart';
 import 'crud.dart';
 import 'navbar.dart';
 import 'network_image.dart';
@@ -69,23 +70,25 @@ class _RecipesScreenState extends State<RecipesScreen> {
         ),
         child: Scaffold(
           backgroundColor: Theme.of(context).buttonColor,
+          drawer: new SideDrawer(),
           appBar: AppBar(
-            backgroundColor: Colors.deepPurpleAccent,
+            iconTheme: new IconThemeData(color: Colors.white),
+            backgroundColor: Colors.blue[800],
             centerTitle: true,
             title: Text(
               'Recipes',
               style: TextStyle(
                   fontFamily: 'Niconne', color: Colors.white, fontSize: 35.0),
             ),
-            leading: IconButton(
-              icon: Icon(
-                Icons.home,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, Navbar.id);
-              },
-            ),
+//            leading: IconButton(
+//              icon: Icon(
+//                Icons.home,
+//                color: Colors.white,
+//              ),
+//              onPressed: () {
+//                Navigator.pushNamed(context, Navbar.id);
+//              },
+//            ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(

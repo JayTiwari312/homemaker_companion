@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homemakercompanion/home_screen.dart';
+import 'package:homemakercompanion/landing1.dart';
 import 'main.dart';
+import 'landing1.dart';
 
 class SideDrawer extends StatelessWidget {
 
@@ -15,7 +17,7 @@ class SideDrawer extends StatelessWidget {
                 width: double.infinity,
                 height: 200,
                 padding: EdgeInsets.all(20),
-                color: Colors.blue,
+                color: Colors.blue[800],
                 child: Center(
                   child: Column(
                     children: <Widget>[
@@ -42,6 +44,7 @@ class SideDrawer extends StatelessWidget {
                 ),
               ),
             ListTile(
+
               leading: Icon(Icons.person),
               title: Text('Profile', style: TextStyle(
                 fontSize: 20
@@ -50,11 +53,16 @@ class SideDrawer extends StatelessWidget {
             ),
               _buildDivider(),
               ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings', style: TextStyle(
+                leading: Icon(Icons.account_box),
+                title: Text('About Us', style: TextStyle(
                     fontSize: 20
                 ),),
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AuthTwoPage()),
+                  );
+                },
               ),
               _buildDivider(),
               ListTile(

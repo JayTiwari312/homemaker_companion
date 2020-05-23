@@ -40,7 +40,9 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[600],
       appBar: AppBar(
+
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(Icons.menu),
@@ -53,7 +55,7 @@ class _ListScreenState extends State<ListScreen> {
 //        ],
 
         title: Center(child: Text('Item List')),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.blue[800],
       ),
       drawer: new SideDrawer(),
       body: Column(
@@ -64,6 +66,7 @@ class _ListScreenState extends State<ListScreen> {
               itemBuilder: (context, int index) {
                 return SingleChildScrollView(
                     child: RoundedContainer(
+                      color: Colors.white30,
                       padding: const EdgeInsets.all(0),
                       margin: EdgeInsets.all(10),
                       height: 100,
